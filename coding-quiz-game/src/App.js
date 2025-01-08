@@ -25,7 +25,8 @@ export default function App() {
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
   const [questionNumber, setQuestionNumber] = useState(1);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
-  const [rightAnswersCounter, setRightAnswersCounter] = useState(0)
+  const [rightAnswersCounter, setRightAnswersCounter] = useState(0);
+  const [finishedQuiz, setFinishedQuiz] = useState(false);
 
   function handleBackHome() {
     setQuestions([]);
@@ -33,34 +34,47 @@ export default function App() {
   }
 
   function checkCorrectAnswer() {
-    if(!selectedAnswer) return alert('Select a answer before going to the next one')
+    if (!selectedAnswer)
+      return alert("Select a answer before going to the next one");
     const correctAnswerKey = `${selectedAnswer}_correct`;
     const isCorrect =
-    questions[questionNumber - 1].correct_answers[correctAnswerKey] === "true";
+      questions[questionNumber - 1].correct_answers[correctAnswerKey] ===
+      "true";
 
     if (isCorrect) {
       console.log("Correct answer!");
-      setRightAnswersCounter((rightAnswersCounter) => rightAnswersCounter + 1)
+      setRightAnswersCounter((rightAnswersCounter) => rightAnswersCounter + 1);
     } else {
       console.log("Wrong answer.");
     }
 
-    nextPageOfQuestions()
+    if (questionNumber < 10) nextPageOfQuestions();
+    else finishQuiz();
   }
 
   function nextPageOfQuestions() {
-    setQuestionNumber(questionNumber => questionNumber + 1)
-    setSelectedAnswer(null)
+    setQuestionNumber((questionNumber) => questionNumber + 1);
+    setSelectedAnswer(null);
+  }
+
+  function finishQuiz() {
+    setFinishedQuiz(true);
   }
 
   function updateAnswer(answer) {
     setSelectedAnswer(answer);
   }
 
+  function playAgain() {
+    setQuestions([]);
+    setQuestionNumber(1);
+    setFinishedQuiz(false)
+  }
+
   return (
     <div className="App">
       <Title />
-      {questions.length === 0 && (
+      {questions.length === 0 && !finishedQuiz && (
         <CategoriesBox>
           <Subtitle />
           <CategoriesList setSelectedCategory={setSelectedCategory} />
@@ -71,7 +85,7 @@ export default function App() {
           />
         </CategoriesBox>
       )}
-      {questions.length > 0 && (
+      {questions.length > 0 && !finishedQuiz && (
         <DisplayQuestions>
           <QuestionHeader
             questions={questions}
@@ -84,9 +98,14 @@ export default function App() {
             onUpdateAnswer={updateAnswer}
             selectedAnswer={selectedAnswer}
           />
-          <QuestionFooter checkCorrectAnswer={checkCorrectAnswer}/>
+          <QuestionFooter
+            checkCorrectAnswer={checkCorrectAnswer}
+            questionNumber={questionNumber}
+          />
         </DisplayQuestions>
       )}
+
+      {finishedQuiz && <ResultQuiz score={rightAnswersCounter} onPlayAgain={playAgain}/>}
     </div>
   );
 }
@@ -170,13 +189,20 @@ function QuestionAnswersList({
   );
 }
 
-function QuestionFooter({checkCorrectAnswer}) {
+function QuestionFooter({ checkCorrectAnswer, questionNumber }) {
   return (
-    <button
-      className="question-next"
-      onClick={checkCorrectAnswer}
-    >
-      Next &rarr;
+    <>
+      <NextButton checkCorrectAnswer={checkCorrectAnswer}>
+        {questionNumber <= 9 ? "Next" : "Finish"} &rarr;
+      </NextButton>
+    </>
+  );
+}
+
+function NextButton({ checkCorrectAnswer, children }) {
+  return (
+    <button className="question-next" onClick={checkCorrectAnswer}>
+      {children}
     </button>
   );
 }
@@ -246,5 +272,14 @@ function ButtonCategories({ selectedCategory, questions, setQuestions }) {
     >
       Choose
     </button>
+  );
+}
+
+function ResultQuiz({score, onPlayAgain}) {
+  return (
+    <div className="result-box">
+      <h3 className="result-score">Your Score: {score}</h3>
+      <button className="result-btn" onClick={onPlayAgain}>Play again</button>
+    </div>
   );
 }
