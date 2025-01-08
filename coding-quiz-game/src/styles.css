@@ -1,1 +1,65 @@
 @charset "UTF-8";
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+:hoot {
+  --color-darkest: #425759;
+  --color-dark: #8FA1A6;
+  --color-normal: #B2C9CD;
+  --color-light: #C7D4D9;
+  --color-lightest: #EBF1F2;
+}
+
+body {
+  background-color: #425759;
+  color: #EBF1F2;
+  margin: 0;
+  padding: 0;
+
+  font-family: "Poppins";
+}
+
+.title {
+  text-align: center;
+  font-size: 3em;
+  padding: 10px;
+}
+
+.quiz-categories {
+  margin-top: 70px;
+  position: absolute;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 1.5em;
+  color: #C7D4D9;
+}
+
+.list-categories {
+  background-color: #8FA1A6;
+  color: #EBF1F2;
+  font-size: 1em;
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.category {
+  background-color: #8FA1A6;
+}
+
+.btn-categories {
+  background-color: #8FA1A6;
+  color: #EBF1F2;
+  border: none;
+  padding: 8px;
+  font-size: 1em;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-left: 30px;
+}
