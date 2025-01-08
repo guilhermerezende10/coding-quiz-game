@@ -53,8 +53,8 @@ body {
 .list-categories {
   background-color: #ebf1f2;
   color: #202d2e;
-  font-size: 1em;
-  padding: 8px;
+  font-size: 1.5em;
+  padding: 13px;
   border-radius: 8px;
   border: none;
   cursor: pointer;
@@ -69,14 +69,14 @@ body {
 }
 
 .btn-categories {
-  padding: 8px;
-  border-radius: 15px;
+  padding: 14px;
+  border-radius: 20px;
   cursor: pointer;
   margin-left: 30px;
 
-  color: black;
-  border: 1px solid #ebf1f2;
-  background-color: #ebf1f2;
+  color: #c7d4d9;
+  border: 1px solid #425759;
+  background-color: #425759;
 
   cursor: pointer;
   font-size: 1.3em;
@@ -85,9 +85,9 @@ body {
 
 .btn-categories:hover {
   transition: 0.3s;
-  color: #c7d4d9;
-  border: 1px solid #425759;
-  background-color: #425759;
+  color: white;
+  border: 1px solid #8fa1a6;
+  background-color: #8fa1a6;
 }
 
 .btn-categories:not(:hover) {
