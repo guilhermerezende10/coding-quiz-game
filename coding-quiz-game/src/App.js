@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./styles.css";
 
 const API_KEY = "2Um4w0zjk1qtARGXcoFU6zNqliZrfkGPECVjHmjc";
@@ -212,7 +212,7 @@ function Title() {
 }
 
 function Subtitle() {
-  return <h2 className="subtitle">🤔 Choose your quiz's category</h2>;
+  return <h2 className="subtitle">🤔 Choose your Quiz's Category</h2>;
 }
 
 async function fetchQuiz(category, setQuestions) {
@@ -270,7 +270,7 @@ function ButtonCategories({ selectedCategory, questions, setQuestions }) {
       className="btn-categories"
       onClick={() => fetchQuiz(selectedCategory, setQuestions)}
     >
-      Choose
+      Start Quiz
     </button>
   );
 }
