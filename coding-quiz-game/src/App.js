@@ -9,7 +9,7 @@ import { Loader } from "./components/Loader";
 import { QuestionFooter } from "./components/Question";
 import { QuestionAnswersList } from "./components/Question";
 import { QuestionHeader } from "./components/Question";
-import { DisplayQuestions } from "./components/DisplayQuestions";
+import { DisplayQuestions } from "./components/Question";
 import { ButtonCategories } from "./components/ButtonCategories";
 import { SelectQuiz } from "./components/SelectQuiz";
 import { CategoriesBox } from "./components/CategoriesBox";
@@ -21,24 +21,27 @@ const API_KEY = "2Um4w0zjk1qtARGXcoFU6zNqliZrfkGPECVjHmjc";
 
 // Available quiz categories
 const categories = [
-  "React",
-  "DevOps",
-  "Linux",
-  "Django",
-  "VueJS",
-  "NodeJs",
-  "Code",
-  "Next.js",
-  "WordPress",
-  "Docker",
-  "bash",
-  "Laravel",
-  "SQL",
+  "Any",
   "Apache Kafka",
+  "bash",
+  "cPanel",
+  "Code",
+  "DevOps",
+  "Django",
+  "Docker",
+  "Laravel",
+  "Linux",
+  "Next.js",
+  "NodeJs",
+  "Postgres",
+  "React",
+  "SQL",
+  "VueJS",
+  "WordPress",
 ];
 
 // Quiz difficulty levels
-const difficulty = ["Easy", "Medium", "Hard"];
+const difficulty = ["Any", "Easy", "Medium", "Hard"];
 
 // Utility function to fetch quiz data
 export async function fetchQuiz(
@@ -50,8 +53,11 @@ export async function fetchQuiz(
   const url = "https://quizapi.io/api/v1/questions";
   try {
     setIsLoading(true); // Show loader during fetch
+    const resCategory = category !== "Any" ? `&category=${category}` : "";
+    const resDificculty =
+      selectedDifficulty !== "Any" ? `&difficulty=${selectedDifficulty}` : "";
     const res = await fetch(
-      `${url}?apiKey=${API_KEY}&limit=10&category=${category}&difficulty=${selectedDifficulty}`
+      `${url}?apiKey=${API_KEY}&limit=10${resCategory}${resDificculty}`
     );
 
     if (!res.ok) throw new Error("Failed to fetch quiz data.");
@@ -195,7 +201,11 @@ export default function App() {
 
       {/* Quiz results */}
       {finishedQuiz && (
-        <ResultQuiz score={rightAnswersCounter} onPlayAgain={resetQuiz} />
+        <ResultQuiz
+          score={rightAnswersCounter}
+          onPlayAgain={resetQuiz}
+          questionNumber={questionNumber}
+        />
       )}
 
       {/* Footer */}
