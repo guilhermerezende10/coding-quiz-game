@@ -1,5 +1,3 @@
-import { fetchQuiz } from "../App.js";
-
 export function CategoriesBox({ children }) {
   return <div className="quiz-categories">{children}</div>;
 }
@@ -7,8 +5,7 @@ export function CategoriesBox({ children }) {
 export function Subtitle() {
   return (
     <h2 className="subtitle">
-      🤔 Choose your Quiz's <br />
-      Category and Difficulty!
+      🤔 Choose your Quiz's <br/>Category and Difficulty!
     </h2>
   );
 }
@@ -29,26 +26,20 @@ export function SelectQuiz({ setSelectedItem, arr }) {
 }
 
 export function ButtonCategories({
-    selectedCategory,
-    setQuestions,
-    selectedDifficulty,
-    setIsLoading,
-    setQuizStarted,
-  }) {
-    return (
-      <button
-        className="btn-categories"
-        onClick={() => {
-          setQuizStarted(true);
-          fetchQuiz(
-            selectedCategory,
-            setQuestions,
-            selectedDifficulty,
-            setIsLoading
-          );
-        }}
-      >
-        Start Quiz
-      </button>
-    );
-  }
+  selectedCategory,
+  setQuestions,
+  selectedDifficulty,
+  setIsLoading,
+  setQuizStarted,
+}) {
+  return (
+    <button
+      className="btn-categories"
+      onClick={() => {
+        setQuizStarted(true);
+      }}
+    >
+      Start Quiz
+    </button>
+  );
+}

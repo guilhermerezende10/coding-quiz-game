@@ -6,7 +6,7 @@ export function QuestionHeader({ questions, questionNumber, onResetQuiz }) {
   return (
     <>
       <h3 className="question-title">
-        {questions[questionNumber - 1].category}'s Question
+        {questions[questionNumber - 1].category || "Coding"} Question
       </h3>
       <span className="question-number">
         {questionNumber}/{questions.length}
