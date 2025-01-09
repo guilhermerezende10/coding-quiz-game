@@ -2,7 +2,7 @@ export function QuestionHeader({ questions, questionNumber, onResetQuiz }) {
   return (
     <>
       <h3 className="question-title">
-        {questions[questionNumber - 1].category} Quiz
+        {questions[questionNumber - 1].category}'s Question
       </h3>
       <span className="question-number">
         {questionNumber}/{questions.length}
@@ -49,4 +49,7 @@ export function QuestionFooter({ checkCorrectAnswer, questionNumber }) {
       {questionNumber < 10 ? "Next" : "Finish"} &rarr;
     </button>
   );
+}
+export function DisplayQuestions({ children }) {
+  return <div className="question-box">{children}</div>;
 }
