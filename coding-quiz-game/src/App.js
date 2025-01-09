@@ -90,7 +90,7 @@ export default function App() {
   // Fetch questions whenever the quiz starts or settings change
   useEffect(() => {
     if (quizStarted) {
-      setQuestions([]); // Reset questions when quiz restarts
+      setQuestions([]);
       fetchQuiz(
         selectedCategory,
         setQuestions,
