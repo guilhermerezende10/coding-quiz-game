@@ -189,20 +189,17 @@ body {
   scale: 1;
 }
 
-.answers-list {
-  padding-bottom: 60px;
-}
-
 .answers {
   background-color: #c7d4d9;
   color: black;
-  font-size: 1em;
+  font-size: 1.2em;
   padding: 15px;
   width: 100%;
   text-align: left;
   border: 1px solid #202d2e;
   border-radius: 10px;
   cursor: pointer;
+  margin-bottom: 30px;
 }
 
 .answer-selected {
@@ -331,7 +328,7 @@ footer .socials a{
   color: #fff;
   border: 1px solid #fff;
   padding: 5px 10px;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   border-radius: 100%;
   transition: all 0.3s ease;
   text-decoration: none;
@@ -344,7 +341,7 @@ footer .socials a:hover{
 }
 
 .socials > span, p{
-  font-size: 1.3rem;
+  font-size: 1rem;
 }
 
 .socials > span > strong {
