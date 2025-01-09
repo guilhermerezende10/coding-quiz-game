@@ -1,4 +1,4 @@
-import { fetchQuiz } from "./App";
+import { fetchQuiz } from "../App.js";
 
 export function ButtonCategories({
   selectedCategory,

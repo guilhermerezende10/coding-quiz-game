@@ -4,15 +4,15 @@ import "./styles.css";
 import { Footer } from "./components/Footer";
 import { ResultQuiz } from "./components/ResultQuiz";
 import { Loader } from "./components/Loader";
-import { QuestionFooter } from "./components/QuestionFooter";
-import { QuestionAnswersList } from "./components/QuestionAnswersList";
-import { QuestionHeader } from "./components/QuestionHeader";
+import { QuestionFooter } from "./components/Question";
+import { QuestionAnswersList } from "./components/Question";
+import { QuestionHeader } from "./components/Question";
 import { DisplayQuestions } from "./components/DisplayQuestions";
-import { ButtonCategories } from "./ButtonCategories";
-import { SelectQuiz } from "./SelectQuiz";
-import { CategoriesBox } from "./CategoriesBox";
-import { Subtitle } from "./Subtitle";
-import { Title } from "./Title";
+import { ButtonCategories } from "./components/ButtonCategories";
+import { SelectQuiz } from "./components/SelectQuiz";
+import { CategoriesBox } from "./components/CategoriesBox";
+import { Subtitle } from "./components/Subtitle";
+import { Title } from "./components/Title";
 
 // API key for fetching quiz data
 const API_KEY = "2Um4w0zjk1qtARGXcoFU6zNqliZrfkGPECVjHmjc";
