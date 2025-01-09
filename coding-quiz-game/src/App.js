@@ -1,6 +1,18 @@
 // Import required hooks and styles
 import { useState, useEffect } from "react";
 import "./styles.css";
+import { Footer } from "./components/Footer";
+import { ResultQuiz } from "./components/ResultQuiz";
+import { Loader } from "./components/Loader";
+import { QuestionFooter } from "./components/QuestionFooter";
+import { QuestionAnswersList } from "./components/QuestionAnswersList";
+import { QuestionHeader } from "./components/QuestionHeader";
+import { DisplayQuestions } from "./components/DisplayQuestions";
+import { ButtonCategories } from "./ButtonCategories";
+import { SelectQuiz } from "./SelectQuiz";
+import { CategoriesBox } from "./CategoriesBox";
+import { Subtitle } from "./Subtitle";
+import { Title } from "./Title";
 
 // API key for fetching quiz data
 const API_KEY = "2Um4w0zjk1qtARGXcoFU6zNqliZrfkGPECVjHmjc";
@@ -27,7 +39,7 @@ const categories = [
 const difficulty = ["Easy", "Medium", "Hard"];
 
 // Utility function to fetch quiz data
-async function fetchQuiz(
+export async function fetchQuiz(
   category,
   setQuestions,
   selectedDifficulty,
@@ -187,172 +199,5 @@ export default function App() {
       {/* Footer */}
       <Footer />
     </div>
-  );
-}
-
-// Components
-
-function Title() {
-  return (
-    <>
-      <h2 className="welcome">Welcome to the</h2>
-      <h1 className="title">📝 Coding Quiz Game</h1>
-    </>
-  );
-}
-
-function Subtitle() {
-  return <h2 className="subtitle">🤔 Choose your Quiz's Category</h2>;
-}
-
-function CategoriesBox({ children }) {
-  return <div className="quiz-categories">{children}</div>;
-}
-
-function SelectQuiz({ setSelectedItem, arr }) {
-  return (
-    <select
-      className="list-elements"
-      onChange={(e) => setSelectedItem(e.target.value)}
-    >
-      {arr.map((element) => (
-        <option value={element} key={element}>
-          {element}
-        </option>
-      ))}
-    </select>
-  );
-}
-
-function ButtonCategories({
-  selectedCategory,
-  setQuestions,
-  selectedDifficulty,
-  setIsLoading,
-  setQuizStarted,
-}) {
-  return (
-    <button
-      className="btn-categories"
-      onClick={() => {
-        setQuizStarted(true);
-        fetchQuiz(
-          selectedCategory,
-          setQuestions,
-          selectedDifficulty,
-          setIsLoading
-        );
-      }}
-    >
-      Start Quiz
-    </button>
-  );
-}
-
-function DisplayQuestions({ children }) {
-  return <div className="question-box">{children}</div>;
-}
-
-function QuestionHeader({ questions, questionNumber, onResetQuiz }) {
-  return (
-    <>
-      <h3 className="question-title">
-        {questions[questionNumber - 1].category} Quiz
-      </h3>
-      <span className="question-number">
-        {questionNumber}/{questions.length}
-      </span>
-      <span className="question-arrow" onClick={onResetQuiz}>
-        &larr;
-      </span>
-      <p className="question-description">
-        {questions[questionNumber - 1].question}
-      </p>
-    </>
-  );
-}
-
-function QuestionAnswersList({
-  questions,
-  questionNumber,
-  onUpdateAnswer,
-  selectedAnswer,
-}) {
-  const answers = questions[questionNumber - 1].answers;
-  return (
-    <div className="answers-list">
-      {Object.entries(answers).map(
-        ([key, value]) =>
-          value && ( // Render only non-null answers
-            <button
-              key={key}
-              className={`answers ${
-                selectedAnswer === key ? "answer-selected" : ""
-              }`}
-              value={key}
-              onClick={() => onUpdateAnswer(key)}
-            >
-              {value}
-            </button>
-          )
-      )}
-    </div>
-  );
-}
-
-function QuestionFooter({ checkCorrectAnswer, questionNumber }) {
-  return (
-    <button className="question-next" onClick={checkCorrectAnswer}>
-      {questionNumber < 10 ? "Next" : "Finish"} &rarr;
-    </button>
-  );
-}
-
-function ResultQuiz({ score, onPlayAgain }) {
-  return (
-    <div className="result-box">
-      <h3 className="result-score">Your Score: {score}</h3>
-      <button className="result-btn" onClick={onPlayAgain}>
-        Play Again
-      </button>
-    </div>
-  );
-}
-
-function Loader() {
-  return <div className="loader"></div>;
-}
-
-function Footer() {
-  return (
-    <footer className="container">
-      <div className="socials">
-        <span>
-          Made by <strong>Guilherme Rezende</strong>
-        </span>
-        <a
-          href="https://github.com/guilhermerezende10"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <i className="ri-github-line"></i>
-        </a>
-        <a
-          href="https://www.instagram.com/guilhermerezende.10/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <i className="ri-instagram-line"></i>
-        </a>
-        <a
-          href="https://www.linkedin.com/in/guilherme-rezende-518297235/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <i className="ri-linkedin-line"></i>
-        </a>
-        <p>rezendeguilherme733@gmail.com</p>
-      </div>
-    </footer>
   );
 }
