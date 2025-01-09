@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./styles.css";
 
 const API_KEY = "2Um4w0zjk1qtARGXcoFU6zNqliZrfkGPECVjHmjc";
@@ -20,13 +20,32 @@ const categories = [
   "Apache Kafka",
 ];
 
+const difficulty = ["Easy", "Medium", "Hard"];
+
 export default function App() {
   const [questions, setQuestions] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(categories[0]);
+  const [selectedCategory, setSelectedCategory] = useState(categories.at(0));
+  const [selectedDifficulty, setSelectedDifficulty] = useState(
+    difficulty.at(0)
+  );
   const [questionNumber, setQuestionNumber] = useState(1);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [rightAnswersCounter, setRightAnswersCounter] = useState(0);
   const [finishedQuiz, setFinishedQuiz] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [quizStarted, setQuizStarted] = useState(false);
+
+  useEffect(() => {
+    if (quizStarted) {
+      setQuestions([]);
+      fetchQuiz(
+        selectedCategory,
+        setQuestions,
+        selectedDifficulty,
+        setIsLoading
+      );
+    }
+  }, [quizStarted, selectedCategory, selectedDifficulty]);
 
   function handleBackHome() {
     setQuestions([]);
@@ -68,23 +87,37 @@ export default function App() {
   function playAgain() {
     setQuestions([]);
     setQuestionNumber(1);
-    setFinishedQuiz(false)
+    setFinishedQuiz(false);
+    setRightAnswersCounter(0)
   }
 
   return (
     <div className="App">
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.min.css"
+      ></link>
       <Title />
-      {questions.length === 0 && !finishedQuiz && (
+      {questions.length === 0 && !finishedQuiz && !isLoading && (
         <CategoriesBox>
           <Subtitle />
-          <CategoriesList setSelectedCategory={setSelectedCategory} />
+          <SelectQuiz setSelectedItem={setSelectedCategory} arr={categories} />
+          <SelectQuiz
+            setSelectedItem={setSelectedDifficulty}
+            arr={difficulty}
+          />
+
           <ButtonCategories
             selectedCategory={selectedCategory}
             questions={questions}
             setQuestions={setQuestions}
+            selectedDifficulty={selectedDifficulty}
+            setIsLoading={setIsLoading}
+            setQuizStarted={setQuizStarted}
           />
         </CategoriesBox>
       )}
+      {isLoading && <Loader />}
       {questions.length > 0 && !finishedQuiz && (
         <DisplayQuestions>
           <QuestionHeader
@@ -105,7 +138,11 @@ export default function App() {
         </DisplayQuestions>
       )}
 
-      {finishedQuiz && <ResultQuiz score={rightAnswersCounter} onPlayAgain={playAgain}/>}
+      {finishedQuiz && (
+        <ResultQuiz score={rightAnswersCounter} onPlayAgain={playAgain} />
+      )}
+
+      <Footer />
     </div>
   );
 }
@@ -208,20 +245,31 @@ function NextButton({ checkCorrectAnswer, children }) {
 }
 
 function Title() {
-  return <h1 className="title">📝 Coding Quiz Game</h1>;
+  return (
+    <>
+      <h2 className="welcome">Welcome to the</h2>
+      <h1 className="title">📝 Coding Quiz Game</h1>;
+    </>
+  );
 }
 
 function Subtitle() {
   return <h2 className="subtitle">🤔 Choose your Quiz's Category</h2>;
 }
 
-async function fetchQuiz(category, setQuestions) {
+async function fetchQuiz(
+  category,
+  setQuestions,
+  selectedDifficulty,
+  setIsLoading
+) {
   console.log(category);
   const url = "https://quizapi.io/api/v1/questions";
 
   try {
+    setIsLoading(true);
     const res = await fetch(
-      `${url}?apiKey=${API_KEY}&limit=10&category=${category}`
+      `${url}?apiKey=${API_KEY}&limit=10&category=${category}&difficulty=${selectedDifficulty}`
     );
 
     if (!res.ok) throw new Error(`Something went wrong. Try again later.`);
@@ -236,6 +284,8 @@ async function fetchQuiz(category, setQuestions) {
   } catch (err) {
     console.error(err);
     setQuestions([]);
+  } finally {
+    setIsLoading(false);
   }
 }
 
@@ -243,43 +293,99 @@ function CategoriesBox({ children }) {
   return <div className="quiz-categories">{children}</div>;
 }
 
-function Category({ category }) {
+function SelectedElement({ selectedElement }) {
   return (
-    <option value={category} className="category">
-      {category}
+    <option value={selectedElement} className="selectedElement">
+      {selectedElement}
     </option>
   );
 }
 
-function CategoriesList({ setSelectedCategory }) {
+function SelectQuiz({ setSelectedItem, arr }) {
   return (
     <select
-      className="list-categories"
-      onChange={(e) => setSelectedCategory(e.target.value)}
+      className="list-elements"
+      onChange={(e) => setSelectedItem(e.target.value)}
     >
-      {categories.map((category) => (
-        <Category category={category} key={category} />
+      {arr.map((element) => (
+        <SelectedElement selectedElement={element} key={element} />
       ))}
     </select>
   );
 }
 
-function ButtonCategories({ selectedCategory, questions, setQuestions }) {
+function ButtonCategories({
+  selectedCategory,
+  questions,
+  setQuestions,
+  selectedDifficulty,
+  setIsLoading,
+  setQuizStarted,
+}) {
   return (
     <button
       className="btn-categories"
-      onClick={() => fetchQuiz(selectedCategory, setQuestions)}
+      onClick={() => {
+        setQuizStarted(true);
+        fetchQuiz(
+          selectedCategory,
+          setQuestions,
+          selectedDifficulty,
+          setIsLoading
+        );
+      }}
     >
       Start Quiz
     </button>
   );
 }
 
-function ResultQuiz({score, onPlayAgain}) {
+function ResultQuiz({ score, onPlayAgain }) {
   return (
     <div className="result-box">
       <h3 className="result-score">Your Score: {score}</h3>
-      <button className="result-btn" onClick={onPlayAgain}>Play again</button>
+      <button className="result-btn" onClick={onPlayAgain}>
+        Play again
+      </button>
     </div>
+  );
+}
+
+function Loader() {
+  return <div className="loader"></div>;
+}
+
+function Footer() {
+  return (
+    <footer class="container">
+      <div class="socials">
+        <span>
+          Made by <strong>Guilherme Rezende</strong>
+        </span>
+        <a
+          href="https://github.com/guilhermerezende10"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <i class="ri-github-line"></i>
+        </a>
+        <a
+          href="https://www.instagram.com/guilhermerezende.10/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <i class="ri-instagram-line"></i>
+        </a>
+        <a
+          href="https://www.linkedin.com/in/guilherme-rezende-518297235/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <i class="ri-linkedin-line"></i>
+        </a>
+        <p>rezendeguilherme733@gmail.com</p>
+
+      </div>
+    </footer>
   );
 }
