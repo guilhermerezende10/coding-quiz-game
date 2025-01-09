@@ -1,6 +1,8 @@
-// Import required hooks and styles
+// Import required hooks, styles and components
 import { useState, useEffect } from "react";
+
 import "./styles.css";
+
 import { Footer } from "./components/Footer";
 import { ResultQuiz } from "./components/ResultQuiz";
 import { Loader } from "./components/Loader";
