@@ -11,8 +11,8 @@ import { DisplayQuestions } from "./components/DisplayQuestions";
 import { ButtonCategories } from "./components/ButtonCategories";
 import { SelectQuiz } from "./components/SelectQuiz";
 import { CategoriesBox } from "./components/CategoriesBox";
-import { Subtitle } from "./components/Subtitle";
-import { Title } from "./components/Title";
+import { Subtitle } from "./components/Header";
+import { Title } from "./components/Header";
 
 // API key for fetching quiz data
 const API_KEY = "2Um4w0zjk1qtARGXcoFU6zNqliZrfkGPECVjHmjc";
