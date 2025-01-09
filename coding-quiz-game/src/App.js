@@ -6,15 +6,17 @@ import "./styles.css";
 import { Footer } from "./components/Footer";
 import { ResultQuiz } from "./components/ResultQuiz";
 import { Loader } from "./components/Loader";
+import { Title } from "./components/Header";
+
+import { ButtonCategories } from "./components/Categories";
+import { Subtitle } from "./components/Categories";
+import { CategoriesBox } from "./components/Categories";
+import { SelectQuiz } from "./components/Categories";
+
 import { QuestionFooter } from "./components/Question";
 import { QuestionAnswersList } from "./components/Question";
 import { QuestionHeader } from "./components/Question";
 import { DisplayQuestions } from "./components/Question";
-import { ButtonCategories } from "./components/ButtonCategories";
-import { SelectQuiz } from "./components/SelectQuiz";
-import { CategoriesBox } from "./components/CategoriesBox";
-import { Subtitle } from "./components/Header";
-import { Title } from "./components/Header";
 
 // API key for fetching quiz data
 const API_KEY = "2Um4w0zjk1qtARGXcoFU6zNqliZrfkGPECVjHmjc";

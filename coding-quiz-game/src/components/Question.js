@@ -1,3 +1,7 @@
+export function DisplayQuestions({ children }) {
+  return <div className="question-box">{children}</div>;
+}
+
 export function QuestionHeader({ questions, questionNumber, onResetQuiz }) {
   return (
     <>
@@ -49,7 +53,4 @@ export function QuestionFooter({ checkCorrectAnswer, questionNumber }) {
       {questionNumber < 10 ? "Next" : "Finish"} &rarr;
     </button>
   );
-}
-export function DisplayQuestions({ children }) {
-  return <div className="question-box">{children}</div>;
 }

@@ -276,7 +276,7 @@ body {
   animation: l1-1 2s infinite, l1-2 0.5s infinite;
 }
 .loader:after {
-  background: #ff3d7f;
+  background: #fff;
   animation-delay: -1s, 0s;
 }
 @keyframes l1-1 {
@@ -308,7 +308,7 @@ body {
   }
 }
 
-footer{
+footer {
   position: absolute;
   transform: translate(-50%, -50%);
   bottom: 3%;
@@ -316,15 +316,14 @@ footer{
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.295);
 }
 
-
-.socials{
+.socials {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 1rem;
 }
 
-footer .socials a{
+footer .socials a {
   color: #fff;
   border: 1px solid #fff;
   padding: 5px 10px;
@@ -334,17 +333,17 @@ footer .socials a{
   text-decoration: none;
 }
 
-footer .socials a:hover{
+footer .socials a:hover {
   color: #0c2e2e;
   background-color: #ebf1f2;
   border-color: #ebf1f2;
 }
 
-.socials > span, p{
+.socials > span,
+p {
   font-size: 1rem;
 }
 
 .socials > span > strong {
   text-decoration: underline;
 }
-
